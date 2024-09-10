@@ -1,0 +1,14 @@
+version: 2 # The 'version' needs to be case sensitive
+
+sources:
+  - name: raw # This is the alias we are giving
+    schema: gz_raw_data # This is our dataset
+
+    tables:
+      - name: sales # This is the table alias name we are going to use
+        identifier: raw_gz_sales # This is the actual table name
+      - name: product
+        identifier: raw_gz_product
+      - name: ship
+        identifier: raw_gz_ship
+
