@@ -1,6 +1,7 @@
 -- finance_days.sql
 
-{{ config(materialized='table') }}
+-- The second instruction says we should remove
+-- {{ config(materialized='table') }} 
 
 SELECT
     date_date,
