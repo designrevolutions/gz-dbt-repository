@@ -16,7 +16,6 @@ product_data AS (
 
 -- Start of main SELECT statement
 SELECT
-    sales_data.date_date,
     sales_data.orders_id,
     sales_data.products_id,
     sales_data.quantity,
