@@ -38,7 +38,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   gz-dbt-repository:
     # Applies to all files under models/example/
-    mart:
-      +materialized: table
-      finance:
-        +schema: finance_days
+  mart:
+    +materialized: table
+    finance:
+      # +schema: finance_days # This hasn't worked either
+      +schema: finance_data
