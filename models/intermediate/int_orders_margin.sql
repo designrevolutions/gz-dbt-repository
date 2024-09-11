@@ -1,32 +1,24 @@
--- Start of sales_data CTE
-WITH sales_data AS (
-    SELECT
-        *
-    FROM 
-        {{ ref('stg_raw__sales') }}
-), -- End of sales_data CTE
+-- int_orders_margin.sql
+ SELECT
+     orders_id,
+     date_date,
+     ROUND(SUM(revenue),2) as revenue,
+     ROUND(SUM(quantity),2) as quantity,
+     ROUND(SUM(purchase_cost),2) as purchase_cost,
+     ROUND(SUM(margin),2) as margin
+ FROM {{ ref("int_sales_margin") }}
+ GROUP BY orders_id,date_date
+ ORDER BY orders_id DESC
 
--- Start of product_data CTE
-product_data AS (
-    SELECT
-        *
-    FROM 
-        {{ ref('stg_raw__product') }}
-) -- End of product_data CTE
-
--- Start of main SELECT statement
-SELECT
-    sales_data.orders_id,
-    sales_data.products_id,
-    sales_data.quantity,
-    sales_data.revenue,
-    product_data.purchase_price,
-    sales_data.quantity * product_data.purchase_price AS purchase_cost,
-    sales_data.revenue - (sales_data.quantity * product_data.purchase_price) AS margin
-FROM 
-    sales_data
-JOIN 
-    product_data
-ON 
-    sales_data.products_id = product_data.products_id -- End of main SELECT statement
-
+-- Alternative way:
+--  -- int_orders_margin.sql
+--  SELECT
+--      orders_id,
+--      max(date_date) as date_date,
+--      ROUND(SUM(revenue),2) as revenue,
+--      ROUND(SUM(quantity),2) as quantity,
+--      ROUND(SUM(purchase_cost),2) as purchase_cost,
+--      ROUND(SUM(margin),2) as margin
+--  FROM {{ ref("int_sales_margin") }}
+--  GROUP BY orders_id
+--  ORDER BY orders_id DESC
